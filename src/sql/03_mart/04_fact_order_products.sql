@@ -3,21 +3,12 @@ SELECT
     op.order_id,
     op.product_id,
     p.department_id,
-    p.aisle_id,
-    op.reordered
+    p.aisle_id
 FROM (
-    SELECT 
-        order_id, 
-        product_id,   
-        reordered
+    SELECT order_id, product_id
     FROM instacart.instacart_clean.order_products_prior
-
     UNION ALL
-    
-    SELECT 
-        order_id, 
-        product_id,   
-        reordered
+    SELECT order_id, product_id
     FROM instacart.instacart_clean.order_products_train
 ) op
 LEFT JOIN instacart.instacart_clean.products p
