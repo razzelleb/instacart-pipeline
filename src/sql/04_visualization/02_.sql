@@ -1,3 +1,4 @@
+CREATE OR REPLACE TABLE instacart.instacart_visualization.purchasing_behavior AS
 SELECT 
     order_dow,
     order_hour_of_day,
