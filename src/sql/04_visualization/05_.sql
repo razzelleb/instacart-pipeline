@@ -6,4 +6,4 @@ SELECT
         2
     ) AS reorder_rate,
     COUNT(*) AS total_products_purchased
-FROM instacart.instacart_clean.fact_order_products;
+FROM instacart.instacart_clean.mart_order_products;
