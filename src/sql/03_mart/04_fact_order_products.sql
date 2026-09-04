@@ -2,8 +2,8 @@ CREATE OR REPLACE TABLE instacart.instacart_mart.fact_order_products AS
 SELECT
     op.order_id,
     op.product_id,
-    p.department_id,
-    p.aisle_id,
+    COALESCE(p.department_id, -1) AS department_id,
+    COALESCE(p.aisle_id, -1) AS aisle_id,
     op.reordered
 FROM (
     SELECT

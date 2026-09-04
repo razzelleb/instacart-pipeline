@@ -11,7 +11,12 @@ FROM instacart.instacart_clean.products p
 LEFT JOIN instacart.instacart_clean.departments d
     ON p.department_id = d.department_id;
 
-
+-- Add fallback placeholder row for unknown products
+INSERT INTO instacart.instacart_mart.dim_product (product_id, product_name, department_id, department)
+SELECT -1, 'Unassigned', -1, 'Unassigned'
+WHERE NOT EXISTS (
+    SELECT 1 FROM instacart.instacart_mart.dim_product WHERE product_id = -1
+);
 
 /*Merge Into Alternate Code - not yet checked
 MERGE INTO instacart.instacart_mart.dim_product AS target
