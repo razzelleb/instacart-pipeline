@@ -1,6 +1,6 @@
 ## DECISIONS:
 
-Silver Layer — Field-Level Cleaning
+## Silver Layer — Field-Level Cleaning
 
 ### aisle, department, product_name 
 Decision: Remove trailing spaces \
@@ -44,7 +44,7 @@ Decision: Replaced nulls with "Unknown" \
 Reason: A missing aisle/department doesn't mean the transaction is invalid — it just wasn't labeled \
 Consequence: Charts/reports grouped by aisle or department will show an "Unknown" category
 
-Gold Layer — Fact & Mart Modeling
+## Gold Layer — Fact & Mart Modeling
 
 ### fact_table
 Decision: Combined order_products_prior and order_products_train using UNION ALL \
@@ -61,7 +61,7 @@ Decision: Replaced null values with -1 \
 Reason: A small number of rows (3 null aisle_id, 3 null department_id) came through as null from the LEFT JOIN; as nulls, they couldn't be linked to dim_aisle/dim_department, so -1 is used as a placeholder key to represent "unknown/unmatched" \
 Consequence: dim_aisle and dim_department need a matching -1 row (e.g. labeled "Unknown") for these fact rows to actually join correctly — otherwise the -1 key still won't resolve to anything on the dimension side
 
-Visualization Layer
+## Visualization Layer
 ### purchasing_behavior — Weekday vs. Weekend
 Decision: Set order_dow 0 and 6 as Sunday and Saturday, and 1–5 as Monday to Friday; split into Weekend and Weekday groups \
 Reason: To compare how customers shop on weekdays vs weekends \
