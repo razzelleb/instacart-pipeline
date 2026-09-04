@@ -56,9 +56,13 @@ Decision: Used a LEFT JOIN to the products table
 Reason: To bring in department_id and aisle_id for each product, while keeping all order rows
 Consequence: If a product_id doesn't match anything in products, its department/aisle will just show as null instead of the row being dropped
 
+#fact_order_products — aisle_id, department_id
+Decision: Replaced null values with -1
+Reason: A small number of rows (3 null aisle_id, 3 null department_id) came through as null from the LEFT JOIN; as nulls, they couldn't be linked to dim_aisle/dim_department, so -1 is used as a placeholder key to represent "unknown/unmatched"
+Consequence: dim_aisle and dim_department need a matching -1 row (e.g. labeled "Unknown") for these fact rows to actually join correctly — otherwise the -1 key still won't resolve to anything on the dimension side
+
 Visualization Layer
 #purchasing_behavior — Weekday vs. Weekend
-
 Decision: Set order_dow 0 and 6 as Sunday and Saturday, and 1–5 as Monday to Friday; split into Weekend and Weekday groups
 Reason: To compare how customers shop on weekdays vs weekends
 Consequence: Found no relation in the database if the number in dow corresponds to the days we used, thus might be inaccurate.
