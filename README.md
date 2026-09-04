@@ -57,9 +57,9 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
 
 ## How to Run
 ### Prerequisites
-- Databricks workspace or any Spark SQL-capable environment.
-- Access to Instacart source files.
-- Git and an environment where you can run SQL or place SQL files into Databricks notebooks/jobs.
+- Databricks workspace
+- Access to Instacart source files
+- GitHub or other git environments
 
 ### Steps
 1. **Clone the repo:** \
