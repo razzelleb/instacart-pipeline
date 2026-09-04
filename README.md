@@ -58,8 +58,8 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
 ## How to Run
 ### Prerequisites
 - Databricks workspace or any Spark SQL-capable environment.
-- Access to Chinook source files or a source database.
-- Git and an environment where you can run SQL or place SQL files into Databricks notebooks / jobs.
+- Access to Instacart source files.
+- Git and an environment where you can run SQL or place SQL files into Databricks notebooks/jobs.
 
 ### Steps
 1. **Clone the repo:** \
@@ -72,7 +72,7 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
 3. **Create the Instacart Catalog**
    - Open Databricks Catalog
    - Click Create > Create a catalog
-   - Name the catalog, instacart
+   - Name the catalog: instacart
 
 4. **Execute SQL files in order:**
    - src/sql/00_setup/00_setup.sql 
@@ -103,8 +103,8 @@ For full query logic, refer to [docs/validation.md](docs/validation.md).
 
 
 ## Decisions
-To ensure data integrity throughout the Bronze → Silver → Gold pipeline, clear transformations were applied during the cleaning phase. A full breakdown of the decisions can be found in [`docs/decisions.md`](docs/decisions.md). \
-For full implementation details, refer to [docs/decision.md](docs/decisions.md).
+To ensure data integrity throughout the Bronze → Silver → Gold pipeline, clear transformations were applied during the cleaning phase. \
+A full breakdown of the decisions can be found in [`docs/decisions.md`](docs/decisions.md).
 
 ### Decisions Summary 
 
