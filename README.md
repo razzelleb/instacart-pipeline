@@ -1,7 +1,6 @@
 # instacart-pipeline
--------
+
 ## Project Overview
--------
 End-to-end data engineering pipeline and dimensional model for the Instacart dataset implemented for Databricks using a medallion architecture (Bronze → Silver → Gold). The pipeline ingests raw Instacart export files, applies cleaning and validation rules, and builds a star schema optimized for analytics and BI reporting.
 
 This repository contains the SQL used for each stage (ingest, clean, model, and analytics) and documentation describing the architecture, data model, and validation rules. See `docs/` for more details.
