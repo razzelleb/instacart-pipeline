@@ -3,7 +3,7 @@
 ---
 
 ## Star Schema Design
-
+<img src="../star_schema_drawio.png" alt="Star Schema" width="600">
 
 ---
 
