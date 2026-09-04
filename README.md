@@ -6,14 +6,12 @@ End-to-end data engineering pipeline and dimensional model for the Instacart dat
 This repository contains the SQL used for each stage (ingest, clean, model, and analytics) and documentation describing the architecture, data model, and validation rules. See `docs/` for more details.
 
 ## Key Findings
--------
 * **Peak Ordering Hours:** Order volume surges during midday hours between **10 AM and 3 PM**. Early morning hours (1 AM to 5 AM) show the lowest activity.
 * **Top Reordered Aisles:** Daily staples dominate repeat purchase rates. The **milk** aisle leads all categories (\~78% reorder rate), followed closely by **water/seltzer/sparkling water**, **fresh fruits**, **eggs**, and **soy/lactose-free** products (\~70%–73%).
 * **Product Reorder Dynamics:** Specific items achieve high reorder rates (near 90%+), including **Raw Veggie Wraps**, **Serenity Ultimate Extrema Overnight Pads**, and **Chocolate Love Bar**. Comparing total orders to reorder rates demonstrates that these products maintain near-100% customer retention despite moderate overall order counts (ranging between 100 and 200 total orders).
 * **Top Products & Category Distribution:** **Beverages** (*Green Tea With Ginseng And Honey*) leads overall order frequency among top products. **Dairy & Eggs** items represent the vast majority of the top-ranked individual products by order count, including varieties of milk, butter, cheese slices, and cottage cheese.
 
 ## Project Architecture and Structure
--------
 This pipeline follows the Medallion Architecture:
 
 - Bronze (raw): file-level ingestion of the original Instacart CSV files.
@@ -40,7 +38,6 @@ See [`docs/architecture.md`](docs/architecture.md) for an in-depth explanation o
 
 
 ## Data Model
--------
 The pipeline uses a star schema focusing on the product, order and aisle dimensions. \
 See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions and the exact star diagram.
 - **Dimensions (dim_*)**
@@ -53,7 +50,6 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
 
 
 ## How to Run
--------
 ###Prerequisites
 - Databricks workspace or any Spark SQL-capable environment.
 - Access to Chinook source files or a source database.
@@ -87,7 +83,6 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
       - conducts validation checks for each layer
 
 ## Validation
--------
 To ensure data integrity across all pipeline layers, the project executes data quality checks covering row-level deduplication, structural integrity, and business logic. \
 For full query logic, refer to [docs/validation.md](docs/validation.md).
 
@@ -100,7 +95,6 @@ For full query logic, refer to [docs/validation.md](docs/validation.md).
 
 
 ## Decisions
--------
 To ensure data integrity throughout the Bronze → Silver → Gold pipeline, clear transformations were applied during the cleaning phase. A full breakdown of the decisions can be found in [`docs/decisions.md`](docs/decisions.md). \
 For full implementation details, refer to [docs/decision.md](docs/decisions.md).
 
