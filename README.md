@@ -3,7 +3,13 @@
 ## Project Overview
 End-to-end data engineering pipeline and dimensional model for the Instacart dataset implemented for Databricks using a medallion architecture (Bronze → Silver → Gold). The pipeline ingests raw Instacart export files, applies cleaning and validation rules, and builds a star schema optimized for analytics and BI reporting.
 
+The project transforms metrics into actionable business intelligence to guide operational and merchandising strategy:
+* **Demand Forecasting & Resource Allocation:** Maps hourly order surges (peak **10 AM–3 PM**, weekend-heavy) to optimize delivery fulfillment capacity and server workloads.
+* **Inventory Management:** Identifies core, high-reorder daily staples (e.g., **Milk**, **Fresh Fruits**, **Eggs**).
+* **Customer Retention & Assortment Strategy:** Isolates niche, high-loyalty products (e.g., *Raw Veggie Wraps*, *Chocolate Love Bar*) with near-100% reorder rates to drive targeted product placement.
+
 This repository contains the SQL used for each stage (ingest, clean, model, and analytics) and documentation describing the architecture, data model, and validation rules. See `docs/` for more details.
+
 
 ## Key Findings
 * **Peak Ordering Hours:** Order volume surges during midday hours between **10 AM and 3 PM**. Early morning hours (1 AM to 5 AM) show the lowest activity.
@@ -50,7 +56,7 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
 
 
 ## How to Run
-###Prerequisites
+### Prerequisites
 - Databricks workspace or any Spark SQL-capable environment.
 - Access to Chinook source files or a source database.
 - Git and an environment where you can run SQL or place SQL files into Databricks notebooks / jobs.
@@ -86,12 +92,14 @@ See [`docs/data-model.md`](docs/data-model.md) for  column-level descriptions an
 To ensure data integrity across all pipeline layers, the project executes data quality checks covering row-level deduplication, structural integrity, and business logic. \
 For full query logic, refer to [docs/validation.md](docs/validation.md).
 
-### Key Metrics & Health Checks
-* **Uniqueness & Completeness:** Tracks `total_rows`, primary/composite key duplicates, and `NULL` counts across critical columns.
-* **Referential Integrity:** Ensures 100% foreign key linkage between fact tables (`fact_order_products`) and dimensional models (`dim_order`, `dim_product`, `dim_aisle`, `dim_department`).
-* **Domain & Business Constraints:** Flags invalid flag values (e.g., `reordered` outside `0`/`1`) or non-positive metrics.
-* **Automated Thresholds:** Triggers alerts or job failures if metrics breach defined quality tolerances (e.g., duplicate composite PK count > 0).
+### 1. Data Hygiene (Silver Layer)
+* **Primary & Foreign Key Non-Null:** Strictly enforces non-null checks on essential join keys (`product_id`, `order_id`).
+* **Domain & Type Enforcement:** Casts physical data types (e.g., numeric strings to `Integer`), normalizes text (`INITCAP`, whitespace removal), and filters out non-positive quantities.
 
+### 2. Business Rule Checks (Gold Layer)
+* **Dimension Uniqueness:** Ensures primary keys in dimension tables maintain 100% uniqueness (`COUNT(DISTINCT) == COUNT(*)`).
+* **Referential Integrity:** Runs `LEFT JOIN` checks between `fact_table` and dimensions (`dim_order`, `dim_product`, `dim_aisle`) to flag unmapped foreign keys.
+* **Cross-Layer Metric Reconciliation:** Compares row counts and total product volume between `instacart_clean` (Silver) and `instacart_mart` (Gold) to guarantee zero data loss during dimensional modeling.
 
 
 ## Decisions
