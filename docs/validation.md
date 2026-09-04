@@ -42,3 +42,24 @@ WHERE o.order_id IS NULL
    OR p.product_id IS NULL
    OR a.aisle_id IS NULL;
 ```
+## Data Quality Audit Findings
+
+### Bronze / Raw Layer
+* **Missing Aisle and Department:** Retained records with missing aisle/department IDs because active products utilize these values.
+* **Product ID 6816:** Contains `NULL` `aisle_id` and `department_id`; retained because it appears in historical purchase orders.
+* **Audit Summary:** Zero duplicate rows detected.
+
+### Silver / Clean Layer
+* **Aisles & Departments:** Confirmed zero `NULL` values and zero duplicate records.
+* **Order Products (`train` / `prior`):** Validated composite primary keys (`order_id`, `product_id`); multiple rows per `order_id` are expected as each row represents an individual product line item in an order.
+* **Orders:** Validated one-to-many relationship where a single `user_id` can associate with multiple orders.
+* **Null Handling:** `days_since_prior_order` contains expected `NULL` values for a user's initial order, and `0` for subsequent orders placed on the same day.
+* **Products:** Retained `product_id = 6816` with `NULL` `aisle_id` and `department_id`.
+* **Audit Summary:** Zero duplicate rows detected.
+
+### Gold / Mart Layer
+* **Dimensions:** Confirmed zero duplicate primary keys and zero `NULL` primary keys across all dimension tables.
+* **Facts:** Confirmed zero duplicate primary keys and zero `NULL` primary keys/foreign keys in the fact table.
+* **Audit Summary:**
+  * Zero duplicate rows detected.
+  * **Zero Orphan Records:** Handled `NULL` `aisle_id` and `department_id` foreign keys by setting them to surrogate key `-1`. These map directly to `'Unassigned'` placeholder rows in `dim_aisle` and `dim_product`
